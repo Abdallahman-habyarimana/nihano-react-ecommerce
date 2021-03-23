@@ -1,11 +1,19 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from 'axios'
 import { Link } from 'react-router-dom';
 import Rating from '../components/Rating';
-import data from './../data';
 
 const ProductScreen = (props) => {
+    const [products, setProducts ] = useState([]);
+    useEffect(()=> {
+      const getData = async() => {
+        const { data } = await axios.get('/api/products')
+        setProducts(data)
+      }; 
+      getData();
+    },[])
     const id = props.match.params.id
-    const product = data.products.find(x => x._id === id)
+    const product = products.find(x => x._id === id)
     if (!product) return <div>Product Not Found</div>
     return ( 
         <div>
@@ -37,7 +45,7 @@ const ProductScreen = (props) => {
                         <li>
                             <div className="row">
                                 <div> Status:  </div>
-                                <div>{ product.countInStock > 0 ? (<span className="success">In Stock </span>) : (<span className="error">Not in Stock</span>) }</div>
+                                <div>{ product.countInStock > 0 ? (<span className="success">In Stock </span>) : (<span className="danger">Not in Stock</span>) }</div>
                             </div>
                         </li>
                         <li>

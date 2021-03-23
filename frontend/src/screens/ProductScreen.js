@@ -1,22 +1,27 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios'
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Rating from '../components/Rating';
+import { useDispatch, useSelector } from 'react-redux';
+import { detailsProduct } from '../actions/products';
+import Loading from './../components/Loading';
+import Message from './../components/Message';
 
 const ProductScreen = (props) => {
-    const [products, setProducts ] = useState([]);
+    const dispatch = useDispatch();
+    const productDetails = useSelector( state => state.productDetails )
+    const productId = props.match.params.id
+    const { error, loading, product } = productDetails;
     useEffect(()=> {
-      const getData = async() => {
-        const { data } = await axios.get('/api/products')
-        setProducts(data)
-      }; 
-      getData();
-    },[])
-    const id = props.match.params.id
-    const product = products.find(x => x._id === id)
+     dispatch(detailsProduct(productId))
+    },[dispatch, productId])
     if (!product) return <div>Product Not Found</div>
     return ( 
         <div>
+        { loading ? 
+          (<Loading />) 
+          : error ? 
+          (<Message variant="danger" error={error} />) 
+          : ( <div>
             <Link to="/">Back to Product</Link>
             <div className="row top">
                 <div className="col-2">
@@ -55,7 +60,10 @@ const ProductScreen = (props) => {
                 </div> 
                 
             </div>;
-        </div>
+        </div>)}
+         
+      </div>
+        
         
     )
 }

@@ -172,6 +172,19 @@ footer {
     color: #a02020;
 }
 
+input,
+select,
+textarea {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 0.1rem #a4a4a4 solid;
+    font-size: 1.6rem;
+    font-family: 'Source Sans Pro', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
 .btn {
     padding: 1rem;
     border-radius: 0;
@@ -217,5 +230,7 @@ button.block {
     justify-content: center;
     align-items: center;
 }
+
+
 
 

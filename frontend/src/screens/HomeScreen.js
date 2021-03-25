@@ -18,7 +18,9 @@ const HomeScreen = () => {
           (<Loading />) 
           : error ? 
           (<Message variant="danger" error={error} />) 
-          : ( <div className="row center"> { products.map(product => ( <Product key={product._id} product={product} /> ))}</div>)}
+          : ( 
+              <div className="row center"> 
+                { products.map(product => ( <Product key={ product._id } product={product} /> ))}</div>)}
          
       </div>
        

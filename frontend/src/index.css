@@ -87,6 +87,13 @@ a.brand {
     font-weight: 600;
 }
 
+.badge {
+    color: #111;
+    font-size: 1.6rem;
+    padding: 0.2rem 0.7rem;
+    margin-right: 0.2px;
+}
+
 header .search {
     border: 1px solid black;
 }

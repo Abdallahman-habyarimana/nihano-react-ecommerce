@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Message from '../components/Message';
-import { addToCart } from './../actions/cart';
+import { addToCart, removeFromCart } from './../actions/cart';
 
 const CartScreen = (props) => {
     const dispatch = useDispatch()
@@ -19,7 +19,7 @@ const CartScreen = (props) => {
     }, [dispatch, productId, qty])
 
     const removeFromCartHandler = (id) => {
-
+        dispatch(removeFromCart(id))
     }
 
     const checkoutHandler = () => {

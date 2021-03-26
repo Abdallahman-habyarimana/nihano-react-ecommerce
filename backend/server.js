@@ -1,11 +1,16 @@
 import express from 'express'
 import colors from 'colors'
+import dotenv from 'dotenv'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import  userRouters  from './routers/userRouters.js'
 import productRouter from './routers/productRouter.js';
 
+dotenv.config()
+
 const app = express();
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect('mongodb://localhost/ecommerce', {
     useNewUrlParser: true,

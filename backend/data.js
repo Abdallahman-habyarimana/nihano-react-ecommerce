@@ -17,8 +17,7 @@ const data = {
     ],
     products: [
         {
-            _id: '1',
-            name: 'Red dress',
+            name: 'Red dress 1',
             category: 'Dress',
             image:'/images/001.jpg',
             price: 80,
@@ -29,7 +28,6 @@ const data = {
             countInStock: 8
         },
         {
-            _id: '2',
             name: 'Haryo Setyadi t-shirt',
             category: 'T-shirt',
             image:'/images/006.jpg',
@@ -41,8 +39,7 @@ const data = {
             countInStock: 5
         },
         {
-            _id: '3',
-            name: 'Red dress',
+            name: 'Red dress 2',
             category: 'Dress',
             image:'/images/003.jpg',
             price: 80,
@@ -53,7 +50,6 @@ const data = {
             countInStock: 9
         },
         {
-            _id: '4',
             name: 'White leave the road',
             category: 'T-shirt',
             image:'/images/007.jpg',
@@ -65,8 +61,7 @@ const data = {
             countInStock: 2
         },
         {
-            _id: '5',
-            name: 'Red dress',
+            name: 'Red dress 3',
             category: 'Dress',
             image:'/images/005.jpg',
             price: 80,
@@ -77,8 +72,7 @@ const data = {
             countInStock: 5
         },
         {
-            _id: '1',
-            name: 'Red dress',
+            name: 'Red dress 4',
             category: 'Dress',
             image:'/images/004.jpg',
             price: 180,

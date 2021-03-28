@@ -27,7 +27,7 @@ userRouters.post('/signin',  expressAsyncHandler(async(req, res) => {
             return
         }
     }
-    res.status(401).send({ message: 'Invalid user login'})
+    res.status(401).send({ message: 'Invalid email or password! Please try again'})
 }))
 
 export default userRouters

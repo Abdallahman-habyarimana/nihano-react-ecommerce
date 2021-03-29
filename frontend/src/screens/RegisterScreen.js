@@ -11,7 +11,7 @@ export default function RegisterScreen(props) {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const redirect = props.location.search ? props.location.search.split('=')[1] : '/';
+    const redirect = props.location.search ? props.location.search.split('=')[1] : "/";
     
     
     const registerUser = useSelector(state => state.userRegister )
@@ -68,7 +68,7 @@ export default function RegisterScreen(props) {
                     <label />
                     <div>
                         Already have an account? { ' '}
-                        <Link to="/signin">Log in to your Account</Link>
+                        <Link to={`/signin?redirect=${redirect}`}>Log in to your Account</Link>
                     </div>
                 </div>
             </form>

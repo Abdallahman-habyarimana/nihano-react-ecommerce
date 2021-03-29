@@ -230,6 +230,18 @@ button.block {
     width: 100%;
 }
 
+.loading {
+    display: block !important;
+}
+
+.success {
+    color: #20a020;
+}
+
+.danger {
+    color:#a02020;
+}
+
 .alert {
     padding: 1rem;
     border: 0.1rem solid transparent;

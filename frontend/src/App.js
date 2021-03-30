@@ -11,6 +11,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ShippingAddressScreen from './screens/ShippingScreen';
 import PaymentScreen from './screens/PaymentScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
 
 function App() {
   const cart = useSelector(state => state.cart);
@@ -24,6 +25,10 @@ function App() {
   const signoutHandler = () => {
     dispatch(signout())
   }
+
+
+  
+
   return (
     <Router>
       <div className="grid-container">
@@ -54,6 +59,7 @@ function App() {
           <Route path="/product/:id" component={ProductScreen} />
           <Route path="/shipping" component={ShippingAddressScreen} />
           <Route path="/payment" component={PaymentScreen} />
+          <Route path="/placeorder" component={PlaceOrderScreen} />
           <Route path="/" component={HomeScreen} exact />
             
         </main>

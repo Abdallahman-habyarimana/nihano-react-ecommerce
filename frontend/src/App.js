@@ -1,14 +1,16 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { signout } from './actions/users'
+
 import ProductScreen from './screens/ProductScreen';
 import HomeScreen from './screens/HomeScreen';
 import CartScreen from './screens/CartScreen';
-import { useSelector, useDispatch } from 'react-redux'
 import LoginScreen from './screens/LoginScreen';
-
-import { signout } from './actions/users'
 import RegisterScreen from './screens/RegisterScreen';
 import ShippingAddressScreen from './screens/ShippingScreen';
+import PaymentScreen from './screens/PaymentScreen';
 
 function App() {
   const cart = useSelector(state => state.cart);
@@ -46,11 +48,12 @@ function App() {
             </div>
         </header>
         <main>
-          <Route path="/shipping" component={ShippingAddressScreen} />
           <Route path="/signin" component={LoginScreen} />
           <Route path="/register" component={RegisterScreen} />
           <Route path="/cart/:id?" component={CartScreen} />
           <Route path="/product/:id" component={ProductScreen} />
+          <Route path="/shipping" component={ShippingAddressScreen} />
+          <Route path="/payment" component={PaymentScreen} />
           <Route path="/" component={HomeScreen} exact />
             
         </main>

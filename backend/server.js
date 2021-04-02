@@ -5,6 +5,7 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import  userRouters  from './routers/userRouters.js'
 import productRouter from './routers/productRouter.js';
+import orderRouter from './routers/orderRouters.js'
 
 dotenv.config()
 
@@ -22,7 +23,8 @@ app.use(cors())
 
 app.use('/api/users', userRouters)
 app.use('/api/products', productRouter)
-app.get('/', (req, res) => {
+app.use('/api/orders', orderRouter);
+app.get('/', (req, res) => { 
     res.send('Server is ready')
 });
 

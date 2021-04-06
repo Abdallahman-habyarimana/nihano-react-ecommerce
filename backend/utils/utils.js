@@ -18,13 +18,13 @@ export const isAuth = (req, res, next) => {
         const token = authorization.slice(7, authorization.length);
         jwt.verify(token, process.env.JWT_SECRET || 'aydenSecret', (err, decode) => {
             if(err){
-                req.status(401).send({ message: 'Invalid Token'})
+                res.status(401).send({ message: 'Invalid Token'})
             } else {
                 req.user = decode;
                 next();
             }
         })
     } else {
-        req.status(401).send({ message: 'No Token Found'})
+        res.status(401).send({ message: 'No Token Found'})
     }
 }

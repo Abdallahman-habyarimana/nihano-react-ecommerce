@@ -28,7 +28,7 @@ const CartScreen = (props) => {
         <div className="row top">
             <div className="col-2">
                 <h1>Shopping Cart</h1>
-                { cartItems.length === 0 ? <Message> Your cart is empty. <Link to="/">Go back to shopping </Link>
+                { cartItems.length === 0 ? <Message error={`Your cart is empty.`}> 
                 </Message> : (
                     <ul>
                         {cartItems.map( item  => (

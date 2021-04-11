@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import { productDetailsReducer, productListReducer } from './reducers/products';
 import { cartReducer } from './reducers/cart';
 import { userRegisterReducer, userSigninReducer } from './reducers/users';
-import { orderDetailReducer, orderPaymentReducer, orderReducer } from './reducers/order';
+import { myOrderReducer, orderDetailReducer, orderPaymentReducer, orderReducer } from './reducers/order';
 
 const initialState = {
     userSignin: {
@@ -27,7 +27,8 @@ const reducer = combineReducers({
     userRegister: userRegisterReducer,
     orderCreate: orderReducer,
     orderDetails: orderDetailReducer,
-    orderPay: orderPaymentReducer
+    orderPay: orderPaymentReducer,
+    myOrderList: myOrderReducer
 })
 
 const composeEnhancer = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;

@@ -13,6 +13,7 @@ import ShippingAddressScreen from './screens/ShippingScreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/orderScreen';
+import OrderHistoryScreen from './screens/OrderHistoryScreen';
 
 function App() {
   const cart = useSelector(state => state.cart);
@@ -43,9 +44,17 @@ function App() {
                   <div className="collapsible">
                     <Link to="#">Welcome {'  ',userInfo.name}  <i className="fa fa-caredt-down"></i></Link>
                     <ul className="collapsible-content">
-                      <Link to="#signout" onClick={signoutHandler}>
-                        Sign Out
-                      </Link>
+                      <li>
+                        <Link to="/orderhistory">
+                          My Order
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="#signout" onClick={signoutHandler}>
+                          Sign Out
+                        </Link>
+                      </li>
+                      
                     </ul>
                   </div>
                   ) : 
@@ -60,6 +69,7 @@ function App() {
           <Route path="/product/:id" component={ProductScreen} />
           <Route path="/shipping" component={ShippingAddressScreen} />
           <Route path="/payment" component={PaymentScreen} />
+          <Route path="/orderhistory" component={OrderHistoryScreen} />
           <Route path="/order/:id" component={OrderScreen} />
           <Route path="/placeorder" component={PlaceOrderScreen} />
           <Route path="/" component={HomeScreen} exact />

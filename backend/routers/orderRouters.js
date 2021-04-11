@@ -5,6 +5,11 @@ import { isAuth } from '../utils/utils.js';
 
 const router = express.Router();
 
+router.get('/me', isAuth, asyncHandler(async(req, res) => {
+    const orders = await Order.find({ user: req.user._id});
+    res.send(orders)
+}))
+
 router.get('/:id', isAuth, asyncHandler(async(req, res) => {
     const order = await Order.findById(req.params.id)
     if(order){

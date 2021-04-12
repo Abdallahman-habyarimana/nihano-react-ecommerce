@@ -32,3 +32,16 @@ export const signout = () => (dispatch) => {
 
     dispatch({ type: actions.USER_SIGNOUT })
 }
+
+export const detailsUser = (userId) => async(dispatch, getState) => {
+    dispatch({ type: actions.USER_DETAILS_REQUEST, payload: userId });
+    const { userSignin: { userInfo }} = getState();
+    try {
+        const { data } = await Axios.get(`/api/users/${userId}`, {
+            headers: { Authorization: `Bearer ${userInfo.token}`}
+        })
+        dispatch({ type: actions.USER_DETAILS_SUCCESS, payload: data})
+    } catch (err) {
+        dispatch({ type: actions.USER_DETAILS_FAIL, payload: err.response.data.message && err.message ? err.response.data.message : err.message })
+    }
+}

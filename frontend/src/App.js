@@ -14,6 +14,7 @@ import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/orderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 function App() {
   const cart = useSelector(state => state.cart);
@@ -45,6 +46,11 @@ function App() {
                     <Link to="#">Welcome {'  ',userInfo.name}  <i className="fa fa-caredt-down"></i></Link>
                     <ul className="collapsible-content">
                       <li>
+                        <Link to="/profile">
+                          Account
+                        </Link>
+                      </li>
+                      <li>
                         <Link to="/orderhistory">
                           My Order
                         </Link>
@@ -69,6 +75,7 @@ function App() {
           <Route path="/product/:id" component={ProductScreen} />
           <Route path="/shipping" component={ShippingAddressScreen} />
           <Route path="/payment" component={PaymentScreen} />
+          <Route path="/profile" component={ProfileScreen} />
           <Route path="/orderhistory" component={OrderHistoryScreen} />
           <Route path="/order/:id" component={OrderScreen} />
           <Route path="/placeorder" component={PlaceOrderScreen} />

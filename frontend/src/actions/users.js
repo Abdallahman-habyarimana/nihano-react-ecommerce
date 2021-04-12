@@ -45,3 +45,19 @@ export const detailsUser = (userId) => async(dispatch, getState) => {
         dispatch({ type: actions.USER_DETAILS_FAIL, payload: err.response.data.message && err.message ? err.response.data.message : err.message })
     }
 }
+
+export const updateUserProfile = (user) => async(dispatch, getState) => {
+    dispatch({ type: actions.USER_UPDATE_PROFILE_REQUEST, payload: user});
+    const { userSignin: { userInfo }} = getState();
+
+    try {
+        const { data } = await Axios.put(`/api/users/profile`, user, {
+            headers: { Authorization: `Bearer ${userInfo.token}`}
+        })
+        dispatch({ type: actions.USER_UPDATE_PROFILE_SUCCESS, payload: data})
+        dispatch({ type: actions.USER_LOGIN_SUCCESS, payload: data})
+        localStorage.setItem("userInfo", JSON.stringify(data))
+    } catch (err) {
+        dispatch({ type: actions.USER_UPDATE_PROFILE_FAIL, payload: err.response.data.message && err.message ? err.response.data.message : err.message })
+    }
+}

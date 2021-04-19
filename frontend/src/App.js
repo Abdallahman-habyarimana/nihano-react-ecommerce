@@ -16,6 +16,8 @@ import OrderScreen from './screens/orderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import PrivateRoute from './components/PrivateRoute';
+import AdminRoute from './components/AdminRoute';
+import ProductListScreen from './screens/ProductListScreen';
 
 function App() {
   const cart = useSelector(state => state.cart);
@@ -44,7 +46,7 @@ function App() {
                 <Link to="/cart"> <i className="fa fa-shopping-cart"></i> {cartItems.length > 0 && ( <span className="badge">{ cartItems.length}</span>)}</Link>
                 { userInfo ? (
                   <div className="collapsible">
-                    <Link to="#">Welcome {'  ',userInfo.name}  <i className="fa fa-caredt-down"></i></Link>
+                    <Link to="#">Welcome {`  ${userInfo.name}`}  <i className="fa fa-caret-down"></i></Link>
                     <ul className="collapsible-content">
                       <li>
                         <Link to="/profile">
@@ -64,12 +66,13 @@ function App() {
                       
                     </ul>
                   </div>
-                  ) : 
-                  (<Link to="/signin"><i className="fa fa-user"></i></Link>) }
-                  { userInfo && userInfo.isAdmin && (
-                    <div className="dropdown">
-                      <Link to ="#admin">Admin <i className="fa fa-caret-down"></i></Link>
-                      <ul className="dropdown-content">
+                  ) : (
+                    <Link to="/signin"><i className="fa fa-user"></i></Link>
+                    )}
+                    { userInfo && userInfo.isAdmin && (
+                    <div className="collapsible">
+                      <Link to ="#admin">Admin {' '} <i className="fa fa-caret-down"></i></Link>
+                      <ul className="collapsible-content">
                         <li>
                           <Link to="/dashboard">Dashboard</Link>
                         </li>
@@ -96,6 +99,7 @@ function App() {
           <Route path="/shipping" component={ShippingAddressScreen} />
           <Route path="/payment" component={PaymentScreen} />
           <PrivateRoute path="/profile" component={ProfileScreen} />
+          <AdminRoute path="/productlist" component={ProductListScreen} />
           <Route path="/orderhistory" component={OrderHistoryScreen} />
           <Route path="/order/:id" component={OrderScreen} />
           <Route path="/placeorder" component={PlaceOrderScreen} />

@@ -14,7 +14,7 @@ export const productListReducer = (state = { products: []}, action ) => {
     }
 }
 
-export const productDetailsReducer = (state = { product: {}, loading: true}, action) => {
+export const productDetailsReducer = (state = { loading: true}, action) => {
     const { type, payload } = action
     switch(type) {
         case actions.PRODUCT_DETAILS_REQUEST:
@@ -25,5 +25,34 @@ export const productDetailsReducer = (state = { product: {}, loading: true}, act
             return { loading: false, error: payload }
         default:
             return state;
+    }
+}
+
+export const productCreateReducer = (state={}, action) => {
+    switch(action.type){
+        case actions.PRODUCT_CREATE_REQUEST: 
+            return { loading: true}
+        case actions.PRODUCT_CREATE_SUCCESS :
+            return { loading: false, success: true, product: action.payload };
+        case actions.PRODUCT_CREATE_FAIL:
+            return { loading: false, error: action.payload}
+        case actions.PRODUCT_CREATE_RESET:
+            return {}
+        default:
+            return state
+    }
+}
+export const productUpdateReducer = (state={}, action) => {
+    switch(action.type){
+        case actions.PRODUCT_UPDATE_REQUEST: 
+            return { loading: true}
+        case actions.PRODUCT_UPDATE_SUCCESS :
+            return { loading: false, success: true, product: action.payload };
+        case actions.PRODUCT_UPDATE_FAIL:
+            return { loading: false, error: action.payload}
+        case actions.PRODUCT_UPDATE_RESET:
+            return {}
+        default:
+            return state
     }
 }

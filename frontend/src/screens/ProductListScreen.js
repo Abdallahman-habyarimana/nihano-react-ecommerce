@@ -2,24 +2,47 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
-import { listProducts } from './../actions/products';
-import { thunk } from 'redux-thunk';
+import { PRODUCT_CREATE_RESET } from "../constants/products";
+import { createProduct, listProducts } from '../actions/products';
 
-const ProductListScreen = ({ props }) => {
+const ProductListScreen = (props) => {
+
     const productList = useSelector(state => state.productList)
     const { loading, error, products} = productList
     const dispatch = useDispatch();
 
+    const productCreate = useSelector(state => state.productCreate);
+    const { 
+        loading: loadingCreate, 
+        error: errorCreate, 
+        success: successCreate, 
+        product:newProduct} = productCreate
+
     useEffect(() => {
+        if(successCreate) {
+            dispatch({ type: PRODUCT_CREATE_RESET })
+            props.history.push(`/product/${newProduct._id}/edit`)
+        }
         dispatch(listProducts())
-    }, [dispatch])
+    }, [newProduct, dispatch, props.history, successCreate])
 
     const deleteHandler = () => {
 
     }
+
+    const createHandler = () => {
+        dispatch(createProduct())
+    }
     return ( 
         <div>
-            <h1>Products</h1>
+            <div className="row">
+                <h1>Products</h1>
+                <button type="button" className="btn btn__primary" onClick={createHandler}>
+                    New Products
+                </button>
+            </div>
+            { loadingCreate && <Loading />}
+            { errorCreate && <Message variant="danger" error={errorCreate} />}
             {   loading ? <Loading /> 
                 :
                 error? <Message variant="danger" error={error} />

@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
-import { PRODUCT_CREATE_RESET } from "../constants/products";
-import { createProduct, listProducts } from '../actions/products';
+import { PRODUCT_CREATE_RESET, PRODUCT_DELETE_RESET } from "../constants/products";
+import { createProduct, listProducts, deleteProduct } from '../actions/products';
+import Table from "../components/common/Table";
 
 const ProductListScreen = (props) => {
 
@@ -18,21 +19,42 @@ const ProductListScreen = (props) => {
         success: successCreate, 
         product:newProduct} = productCreate
 
+    const productDelete = useSelector(state => state.productDelete)
+    const { loading: loadingDelete, error: errorDelete, success: successDelete} = productDelete
+    
     useEffect(() => {
         if(successCreate) {
             dispatch({ type: PRODUCT_CREATE_RESET })
             props.history.push(`/product/${newProduct._id}/edit`)
         }
+        if(successDelete) {
+            dispatch({ type: PRODUCT_DELETE_RESET })
+        }
         dispatch(listProducts())
-    }, [newProduct, dispatch, props.history, successCreate])
+    }, [newProduct, dispatch, props.history, successCreate, successDelete])
 
-    const deleteHandler = () => {
-
+    
+    const deleteHandler = (product) => {
+        if(window.confirm('Are you sure to delete')){
+            dispatch(deleteProduct(product._id))
+        }
+        
     }
 
     const createHandler = () => {
         dispatch(createProduct())
     }
+
+    const columns = [
+        { path: '_id', label: 'ID'},
+        { path: 'name', label: 'Name' },
+        { path: 'price', label: 'price'},
+        { path: 'category', label: 'Category' },
+        { path: 'brand', label: 'Brand'},
+        { key: 'edit', label:'Actions', content: product => <button type="button" className="small" onClick={()=> props.history.push(`/product/${product._id}/edit`)}>Edit</button> },
+        { key: 'edit', content: product => <button type="button" className="small" onClick={()=> deleteHandler(product)}>Delete</button> }
+ 
+    ]
     return ( 
         <div>
             <div className="row">
@@ -41,6 +63,9 @@ const ProductListScreen = (props) => {
                     New Products
                 </button>
             </div>
+            { loadingDelete && <Loading />}
+            { errorDelete && <Message variant="danger" error={errorDelete} />}
+
             { loadingCreate && <Loading />}
             { errorCreate && <Message variant="danger" error={errorCreate} />}
             {   loading ? <Loading /> 
@@ -48,33 +73,7 @@ const ProductListScreen = (props) => {
                 error? <Message variant="danger" error={error} />
                 :
                 (
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>NAME</th>
-                                <th>PRICE</th>
-                                <th>CATEGORY</th>
-                                <th>BRAND</th>
-                                <th>ACTIONS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {products.map((product) => (
-                                <tr key={ product._id}>
-                                    <td>{product._id}</td>
-                                    <td>{product.name}</td>
-                                    <td>{product.price}</td>
-                                    <td>{product.category}</td>
-                                    <td>{product.brand}</td>
-                                    <td>
-                                        <button type="button" className="small" onClick={()=> props.history.push(`/product/${product._id}/edit`)}>Edit</button>
-                                        <button type="button" className="small" onClick={()=> deleteHandler(product._id)}>Delete</button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <Table columns={columns} data={products} /> 
                 )
             }
         </div>

@@ -60,3 +60,18 @@ export const updateProduct = (product) => async(dispatch, getState) => {
         dispatch({ type: actions.PRODUCT_UPDATE_FAIL, payload:err.response.data.message && err.message ? err.response.data.message : err.message })
     }
 }
+
+export const deleteProduct = (id) => async(dispatch, getState) => {
+    dispatch({ type: actions.PRODUCT_DELETE_REQUEST, payload: id})
+    const { userSignin:{userInfo}} = getState();
+    try {
+        const { data } = await axios.delete(`/api/products/${id}`, {
+            headers: { Authorization: `Bearer ${userInfo.token}`}
+        })
+        dispatch({
+            type: actions.PRODUCT_DELETE_SUCCESS
+        })
+    } catch (err) {
+        dispatch({ type: actions.PRODUCT_DELETE_FAIL, payload:err.response.data.message && err.message ? err.response.data.message : err.message })
+    }
+}

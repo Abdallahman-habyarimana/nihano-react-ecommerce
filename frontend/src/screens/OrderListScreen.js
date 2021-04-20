@@ -14,7 +14,6 @@ const OrderListScreen = (props) => {
     const orderDelete = useSelector(state => state.orderDelete);
     const { loading: loadingDelete, error: errorDelete, success: successDelete } = orderDelete
 
-
     const dispatch = useDispatch()
     useEffect(()=> {
         dispatch({ type: ORDER_DELETE_RESET })

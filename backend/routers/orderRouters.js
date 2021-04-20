@@ -73,5 +73,17 @@ router.delete('/:id', isAuth, isAdmin, asyncHandler(async(req, res)=> {
     }
 }))
 
+router.put('/:id/deliver', isAuth, asyncHandler(async(req, res) => {
+    const order = await Order.findById(req.params.id);
+    if(order){
+        order.isPaid = true;
+        order.paidAt = Date.now();
+        const updateOrder = await Order.save();
+        res.send({ message: 'Order Delivered', order: updateOrder })
+    } else {
+        res.status(404).send({ message: 'Order Not Found '})
+    }
+}))
+
 
 export default router

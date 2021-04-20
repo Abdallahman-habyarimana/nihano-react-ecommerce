@@ -51,8 +51,13 @@ const ProductListScreen = (props) => {
         { path: 'price', label: 'price'},
         { path: 'category', label: 'Category' },
         { path: 'brand', label: 'Brand'},
-        { key: 'edit', label:'Actions', content: product => <button type="button" className="small" onClick={()=> props.history.push(`/product/${product._id}/edit`)}>Edit</button> },
-        { key: 'edit', content: product => <button type="button" className="small" onClick={()=> deleteHandler(product)}>Delete</button> }
+        { key: 'edit', label:'Actions', content: product =>
+            <> 
+                <button type="button" className="small" onClick={()=> props.history.push(`/product/${product._id}/edit`)}>Edit</button> 
+                <button type="button" className="small" onClick={()=> deleteHandler(product)}>Delete</button>
+            </>
+            },
+
  
     ]
     return ( 

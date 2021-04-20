@@ -118,7 +118,7 @@ const PlaceOrderScreen = (props) => {
                                 </div>
                             </li>
                             <li>
-                                <button type="button" onClick={placeOrderHandler} className="btn btn__primary" disabled={cart.cartItems.length === 0}>Place Order</button>
+                                <button type="button" onClick={placeOrderHandler} className="btn btn__primary btn__block" disabled={cart.cartItems.length === 0}>Place Order</button>
                             </li>
                             { loading && <Loading></Loading> }
                             { error && <Message variant="danger" error={error} />}

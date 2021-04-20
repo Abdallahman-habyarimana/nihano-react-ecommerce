@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb://localhost/ecommerce', {
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/ecommerce', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true

@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
 import Table from "../components/common/Table";
-import { listUsers } from "../actions/users";
+import { listUsers, deleteUser } from "../actions/users";
+import { USER_DELETE_RESET } from "../constants/users";
+
 
 
 const UserListScreen = (props) => {
@@ -12,22 +14,22 @@ const UserListScreen = (props) => {
     const { loading, error, users } = userList
     const dispatch = useDispatch();
 
+    const userDelete = useSelector(state => state.userDelete)
+    const { loading: loadingDelete, error: errorDelete, success: successDelete } = userDelete
+
     useEffect(() => {
+        dispatch({ type: USER_DELETE_RESET })
         dispatch(listUsers())
-    }, [dispatch])
+    }, [dispatch, successDelete])
 
     
-    // const deleteHandler = (product) => {
-    //     if(window.confirm('Are you sure to delete')){
-    //         dispatch(deleteProduct(product._id))
-    // }
+    const deleteHandler = (user) => {
+        if(window.confirm('Are you sure to delete')){
+            dispatch(deleteUser(user._id))
+    }
         
-    // }
-
-    // const createHandler = () => {
-    //     dispatch(createProduct())
+    }
     
-
     const columns = [
         { path: '_id', label: 'ID'},
         { path: 'name', label: 'Name' },
@@ -35,8 +37,8 @@ const UserListScreen = (props) => {
         { path: 'isAdmin', label: 'ADMIN' },
         { key: 'edit', label:'Actions', content: user =>
         <> 
-            <button type="button" className="small" >Edit</button> 
-            <button type="button" className="small" >Delete</button>
+            <button type="button" className="small" onClick={()=> props.history.push(`/users/${user._id}/edit`)}>Edit</button> 
+            <button type="button" className="small" onClick={()=> deleteHandler(user)}>Delete</button>
         </>
         },
  
@@ -44,6 +46,8 @@ const UserListScreen = (props) => {
     return ( 
         <div>
             <h1>Users List</h1>
+                { loadingDelete && <Loading />}
+                { errorDelete && <Message variant="danger" error={errorDelete}/>}
                {   loading ? <Loading /> 
                 :
                 error? <Message variant="danger" error={error} />

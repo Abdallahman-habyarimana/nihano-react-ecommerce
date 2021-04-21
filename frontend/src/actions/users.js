@@ -76,3 +76,18 @@ export const listUsers = () => async(dispatch, getState) => {
         dispatch({ type: actions.USER_LIST_FAIL, payload: err.response.data.message && err.message ? err.response.data.message : err.message })
     }
 }
+
+export const deleteUser = (id) => async(dispatch, getState) => {
+    dispatch({ type: actions.USER_DELETE_REQUEST, payload: id})
+    const { userSignin:{userInfo}} = getState();
+    try {
+        const { data } = await Axios.delete(`/api/users/${id}`, {
+            headers: { Authorization: `Bearer ${userInfo.token}`}
+        })
+        dispatch({
+            type: actions.USER_DELETE_SUCCESS
+        })
+    } catch (err) {
+        dispatch({ type: actions.USER_DELETE_FAIL, payload:err.response.data.message && err.message ? err.response.data.message : err.message })
+    }
+}

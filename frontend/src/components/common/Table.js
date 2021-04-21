@@ -3,7 +3,6 @@ import TableBody from './TableBody';
 import TableHeader from './TableHeader';
 
 const Table = ({ data, columns }) => {
-    console.log(data)
     return ( 
         <table className="table">
             <TableHeader columns={columns} />

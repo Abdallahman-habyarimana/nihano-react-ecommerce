@@ -4,7 +4,6 @@ import _ from 'lodash'
 export default function TableBody({ data, columns }) {
     
     const renderCell = (item, column) => {
-        console.log(item)
         if(column.content) return column.content(item);  
         let value = _.get(item, column.path)
         value = convertType(value)

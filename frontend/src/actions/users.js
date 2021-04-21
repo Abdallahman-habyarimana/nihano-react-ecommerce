@@ -69,11 +69,26 @@ export const listUsers = () => async(dispatch, getState) => {
         const { data } = await Axios.get(`/api/users`, {
             headers: { Authorization: `Bearer ${userInfo.token}`}
         })
-        console.log(data)
         dispatch({ type: actions.USER_LIST_SUCCESS, payload: data })
         
     } catch (err) {
         dispatch({ type: actions.USER_LIST_FAIL, payload: err.response.data.message && err.message ? err.response.data.message : err.message })
+    }
+}
+
+export const updateUser = (user) => async(dispatch, getState) => {
+    dispatch({ type: actions.USER_UPDATE_REQUEST, payload: user })
+    const { userSignin:{userInfo}} = getState();
+    try {
+        const { data } = await Axios.put(`/api/users/${user._id}`, user,
+        {
+            headers: { Authorization: `Bearer ${userInfo.token}`}
+        })
+        dispatch({
+            type: actions.USER_UPDATE_SUCCESS, payload: data
+        })
+    } catch (err) {
+        dispatch({ type: actions.USER_UPDATE_FAIL, payload:err.response.data.message && err.message ? err.response.data.message : err.message })
     }
 }
 

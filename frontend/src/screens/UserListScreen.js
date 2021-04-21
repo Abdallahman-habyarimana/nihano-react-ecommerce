@@ -4,7 +4,7 @@ import Loading from "../components/Loading";
 import Message from "../components/Message";
 import Table from "../components/common/Table";
 import { listUsers, deleteUser } from "../actions/users";
-import { USER_DELETE_RESET } from "../constants/users";
+import {  USER_DETAILS_RESET } from "../constants/users";
 
 
 
@@ -18,8 +18,8 @@ const UserListScreen = (props) => {
     const { loading: loadingDelete, error: errorDelete, success: successDelete } = userDelete
 
     useEffect(() => {
-        dispatch({ type: USER_DELETE_RESET })
         dispatch(listUsers())
+        dispatch({ type: USER_DETAILS_RESET})
     }, [dispatch, successDelete])
 
     
@@ -37,7 +37,7 @@ const UserListScreen = (props) => {
         { path: 'isAdmin', label: 'ADMIN' },
         { key: 'edit', label:'Actions', content: user =>
         <> 
-            <button type="button" className="small" onClick={()=> props.history.push(`/users/${user._id}/edit`)}>Edit</button> 
+            <button type="button" className="small" onClick={()=> props.history.push(`/user/${user._id}/edit`)}>Edit</button> 
             <button type="button" className="small" onClick={()=> deleteHandler(user)}>Delete</button>
         </>
         },

@@ -1,12 +1,15 @@
 import express from 'express';
 import asyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
-import { isAdmin, isAuth } from '../utils/utils.js';
+import { isAdmin, isAuth, isSellerOrAdmin } from '../utils/utils.js';
 
 const router = express.Router();
 
-router.get('/', isAuth, isAdmin, asyncHandler(async(req, res) => {
-    const orders = await Order.find({}).populate('user', 'name');
+router.get('/', isAuth, isSellerOrAdmin, asyncHandler(async(req, res) => {
+    const seller = req.query.seller || ''
+    const sellerFilter = seller? { seller} : {}
+
+    const orders = await Order.find({...sellerFilter}).populate('user', 'name');
     res.send(orders)
 }))
 
@@ -29,6 +32,7 @@ router.post('/', isAuth, asyncHandler(async(req, res) => {
         res.status(400).send({ message: 'Cart is empty'});
     } else {
         const order = new Order({
+            seller: req.body.orderItems[0].seller,
             orderItems: req.body.orderItems,
             shippingAddress: req.body.shippingAddress,
             paymentMethod: req.body.paymentMethod,

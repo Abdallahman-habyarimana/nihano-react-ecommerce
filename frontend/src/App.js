@@ -22,6 +22,7 @@ import EditProductScreen from './screens/EditProductScreen';
 import OrderListScreen from './screens/OrderListScreen';
 import UserListScreen from './screens/UserListScreen';
 import UserEditScreen from './screens/UserEditScreen';
+import SellerRoute from './components/SellerRoute';
 
 function App() {
   const cart = useSelector(state => state.cart);
@@ -73,6 +74,20 @@ function App() {
                   ) : (
                     <Link to="/signin"><i className="fa fa-user"></i></Link>
                     )}
+                     { userInfo && userInfo.isSeller && (
+                    <div className="collapsible">
+                      <Link to ="#seller">Seller {' '} <i className="fa fa-caret-down"></i></Link>
+                      <ul className="collapsible-content">
+                        <li>
+                          <Link to="/productlist/seller">Products</Link>
+                        </li>
+                        <li>
+                          <Link to="/orderlist/seller">Orders</Link>
+                        </li>
+                      </ul>
+                    </div>
+                    
+                  )}
                     { userInfo && userInfo.isAdmin && (
                     <div className="collapsible">
                       <Link to ="#admin">Admin {' '} <i className="fa fa-caret-down"></i></Link>
@@ -103,9 +118,12 @@ function App() {
           <Route path="/shipping" component={ShippingAddressScreen} />
           <Route path="/payment" component={PaymentScreen} />
           <PrivateRoute path="/profile" component={ProfileScreen} />
-          <AdminRoute path="/productlist" component={ProductListScreen} />
+          <AdminRoute path="/productlist" component={ProductListScreen} exact />
           <AdminRoute path="/product/:id/edit" component={EditProductScreen} />
-          <AdminRoute path="/orderlist" component={OrderListScreen} />
+          <AdminRoute path="/orderlist" component={OrderListScreen} exact/>
+          <SellerRoute path="/productlist/seller" component={ProductListScreen} />
+          <SellerRoute path="/product/:id/edit/seller" component={EditProductScreen} />
+          <SellerRoute path="/orderlist/seller" component={OrderListScreen} />
           <AdminRoute path="/userlist" component={UserListScreen} />
           <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
           <Route path="/orderhistory" component={OrderHistoryScreen} />

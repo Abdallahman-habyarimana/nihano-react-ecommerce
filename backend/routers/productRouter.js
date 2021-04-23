@@ -2,12 +2,14 @@ import express from 'express';
 import data from '../data.js'
 import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js';
-import { isAdmin, isAuth} from '../utils/utils.js'
+import { isAdmin, isAuth, isSellerOrAdmin } from '../utils/utils.js'
 const productRouter = express.Router();
 
 
 productRouter.get('/', asyncHandler(async (req, res) => {
-    const products = await Product.find({});
+    const seller = req.query.seller || ''
+    const sellerFilter = seller? { seller} : {}
+    const products = await Product.find({...sellerFilter});
     res.send(products)
 }))
 
@@ -25,9 +27,10 @@ productRouter.get('/:id', asyncHandler(async(req, res) => {
     }
 }))
 
-productRouter.post('/', isAuth, isAdmin, asyncHandler(async(req, res) => {
+productRouter.post('/', isAuth, isSellerOrAdmin, asyncHandler(async(req, res) => {
     const product = new Product({
         name: 'Sample name' + Date.now(),
+        seller: req.user._id,
         image: '/images/001.jpg',
         price: 0,
         category: 'sample category',
@@ -41,7 +44,7 @@ productRouter.post('/', isAuth, isAdmin, asyncHandler(async(req, res) => {
     res.send({ message: 'Product Created', product: createdProduct })
 }))
 
-productRouter.put("/:id", isAuth, isAdmin, asyncHandler(async(req, res) => {
+productRouter.put("/:id", isAuth, isSellerOrAdmin,  asyncHandler(async(req, res) => {
     const productId = req.params.id;
     const product = await Product.findById(productId);
     if(product){

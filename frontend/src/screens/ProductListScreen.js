@@ -7,10 +7,15 @@ import { createProduct, listProducts, deleteProduct } from '../actions/products'
 import Table from "../components/common/Table";
 
 const ProductListScreen = (props) => {
-
+    const sellerMode = props.match.path.indexOf('seller') >= 0
+    
     const productList = useSelector(state => state.productList)
     const { loading, error, products} = productList
+    
     const dispatch = useDispatch();
+
+    const userSignin = useSelector(state => state.userSignin)
+    const { userInfo } = userSignin
 
     const productCreate = useSelector(state => state.productCreate);
     const { 
@@ -30,8 +35,8 @@ const ProductListScreen = (props) => {
         if(successDelete) {
             dispatch({ type: PRODUCT_DELETE_RESET })
         }
-        dispatch(listProducts())
-    }, [newProduct, dispatch, props.history, successCreate, successDelete])
+        dispatch(listProducts({ seller: sellerMode ? userInfo._id : ''}))
+    }, [newProduct, dispatch, props.history, successCreate, successDelete, sellerMode, userInfo._id])
 
     
     const deleteHandler = (product) => {

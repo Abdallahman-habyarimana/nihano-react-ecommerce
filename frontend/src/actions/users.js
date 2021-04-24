@@ -106,3 +106,14 @@ export const deleteUser = (id) => async(dispatch, getState) => {
         dispatch({ type: actions.USER_DELETE_FAIL, payload:err.response.data.message && err.message ? err.response.data.message : err.message })
     }
 }
+
+export const listTopSellers = () => async(dispatch, getState) => {
+    dispatch({ type: actions.USER_TOP_SELLER_REQUEST });
+    try {
+        const { data } = await Axios.get(`/api/users/top-sellers`)
+        dispatch({ type: actions.USER_TOP_SELLER_SUCCESS, payload: data })
+        
+    } catch (err) {
+        dispatch({ type: actions.USER_TOP_SELLER_FAIL, payload: err.response.data.message && err.message ? err.response.data.message : err.message })
+    }
+}

@@ -365,3 +365,9 @@ button.small {
 .table button{
     margin: 0 0.2rem;
 }
+
+/*  carousel */
+
+.carousel .slide img {
+    max-width: 30rem;
+}

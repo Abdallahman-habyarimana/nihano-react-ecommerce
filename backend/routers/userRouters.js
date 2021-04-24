@@ -7,6 +7,11 @@ import { isAuth, generateToken, isAdmin } from '../utils/utils.js';
 const userRouters = express.Router();
 
 
+userRouters.get('/top-sellers', asyncHandler(async(req, res) => {
+    const topSellers = await User.find({ isSeller: true}).sort({ 'seller.rating': -1}).limit(3)
+    res.send(topSellers)
+}))
+
 userRouters.get('/seed', asyncHandler(async(req, res) => {
     const createdUsers = await User.insertMany(data.users)
     res.send({ createdUsers })

@@ -10,7 +10,7 @@ const CartScreen = (props) => {
     const qty = props.location.search 
         ? Number(props.location.search.split('=')[1]) : 1;
     const cart =  useSelector(state => state.cart);
-    const { cartItems } = cart
+    const { cartItems, error } = cart
     useEffect(() => {
         if(productId) {
             dispatch(addToCart(productId, qty));
@@ -28,6 +28,7 @@ const CartScreen = (props) => {
         <div className="row top">
             <div className="col-2">
                 <h1>Shopping Cart</h1>
+                {error && <Message variant="danger" error={error}/>}
                 { cartItems.length === 0 ? <Message error={`Your cart is empty.`}> 
                 </Message> : (
                     <ul>

@@ -124,7 +124,6 @@ function App() {
           <AdminRoute path="/product/:id/edit" component={EditProductScreen} />
           <AdminRoute path="/orderlist" component={OrderListScreen} exact/>
           <SellerRoute path="/productlist/seller" component={ProductListScreen} />
-          <SellerRoute path="/product/:id/edit/seller" component={EditProductScreen} />
           <SellerRoute path="/orderlist/seller" component={OrderListScreen} />
           <AdminRoute path="/userlist" component={UserListScreen} />
           <AdminRoute path="/user/:id/edit" component={UserEditScreen} />

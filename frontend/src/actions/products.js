@@ -1,13 +1,13 @@
 import axios from 'axios'
 import * as actions from '../constants/products';
 
-export const listProducts = ({ seller=''}) => async(dispatch) => {
+export const listProducts = ({ seller='', name=''}) => async(dispatch) => {
     dispatch({
         type: actions.PRODUCT_LIST_REQUEST
     });
 
     try {
-        const { data } = await axios.get(`/api/products?seller=${seller}`);
+        const { data } = await axios.get(`/api/products?seller=${seller}&name=${name}`);
         dispatch({ type: actions.PRODUCT_LIST_SUCCESS, payload: data })
     } catch (err) {
         dispatch({ type: actions.PRODUCT_LIST_FAIL, payload: err.message })

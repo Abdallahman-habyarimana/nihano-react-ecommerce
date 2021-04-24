@@ -24,6 +24,8 @@ import UserListScreen from './screens/UserListScreen';
 import UserEditScreen from './screens/UserEditScreen';
 import SellerRoute from './components/SellerRoute';
 import SellerScreen from './screens/SellerScreen';
+import SearchBox from './components/SearchBox';
+import SearchScreen from './screens/SearchScreen';
 
 function App() {
   const cart = useSelector(state => state.cart);
@@ -47,6 +49,9 @@ function App() {
         <header className="row">
             <div>
                 <Link to="/" className="brand">Nihano</Link>
+            </div>
+            <div>
+              <Route render={({history}) => <SearchBox history={history}/> } />
             </div>
             <div>
                 <Link to="/cart"> <i className="fa fa-shopping-cart"></i> {cartItems.length > 0 && ( <span className="badge">{ cartItems.length}</span>)}</Link>
@@ -117,6 +122,7 @@ function App() {
           <Route path="/register" component={RegisterScreen} />
           <Route path="/cart/:id?" component={CartScreen} />
           <Route path="/product/:id" component={ProductScreen} exact />
+          <Route path="/search/name/:name?" component={SearchScreen} exact />
           <Route path="/shipping" component={ShippingAddressScreen} />
           <Route path="/payment" component={PaymentScreen} />
           <PrivateRoute path="/profile" component={ProfileScreen} />

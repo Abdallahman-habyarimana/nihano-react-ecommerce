@@ -22,7 +22,7 @@ const OrderScreen = (props) => {
     const { loading: loadingPay, error: errorPay, success: successPay } = orderPay;
 
     const orderDeliver = useSelector( state => state.orderDeliver);
-    const { loading: loadingDeliver, error: errorDeliver, success: successDeliver } = orderDeliver;
+    const { success: successDeliver } = orderDeliver;
 
     const dispatch = useDispatch()
     useEffect(() => {

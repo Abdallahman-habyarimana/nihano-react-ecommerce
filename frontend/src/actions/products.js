@@ -1,16 +1,38 @@
 import axios from 'axios'
 import * as actions from '../constants/products';
 
-export const listProducts = ({ seller='', name=''}) => async(dispatch) => {
+export const listProducts = ({ 
+    seller='', 
+    name='', 
+    category='', 
+    order = '',
+    min=0, 
+    max=0, 
+    rating=0 }) => async(dispatch) => {
     dispatch({
         type: actions.PRODUCT_LIST_REQUEST
     });
 
     try {
-        const { data } = await axios.get(`/api/products?seller=${seller}&name=${name}`);
+        const { data } = await axios.get(`/api/products?seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`);
         dispatch({ type: actions.PRODUCT_LIST_SUCCESS, payload: data })
     } catch (err) {
         dispatch({ type: actions.PRODUCT_LIST_FAIL, payload: err.message })
+    }
+
+}
+
+export const listProductCategories = () => async(dispatch) => {
+    dispatch({
+        type: actions.PRODUCT_CATEGORIES_REQUEST
+    });
+
+    try {
+        const { data } = await axios.get(`/api/products/categories`);
+        console.log(data)
+        dispatch({ type: actions.PRODUCT_CATEGORIES_SUCCESS, payload: data })
+    } catch (err) {
+        dispatch({ type: actions.PRODUCT_CATEGORIES_FAIL, payload: err.message })
     }
 
 }

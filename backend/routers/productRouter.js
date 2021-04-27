@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { query } from 'express';
 import data from '../data.js'
 import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js';
@@ -8,11 +8,41 @@ const productRouter = express.Router();
 
 productRouter.get('/', asyncHandler(async (req, res) => {
     const name = req.query.name || ''
+    const category = req.query.category || ''
     const seller = req.query.seller || ''
+    const order = req.query.order || ''
+    const min = req.query.min && Number(req.query.min) !== 0 ? Number(req.query.min) : 0;
+    const max = req.query.max && Number(req.query.max) !== 0 ? Number(req.query.max) : 0;
+    const rating = req.query.rating && Number(req.query.rating) !== 0 ? Number(req.query.rating) : 0;
+
     const nameFilter = name ? {name: {$regex: name, $options: 'i'} } : ''
     const sellerFilter = seller? { seller} : {}
-    const products = await Product.find({...sellerFilter, ...nameFilter}).populate('seller', 'seller.name seller.logo');
+    const categoryFilter = category? { category } : {}
+    const priceFilter = min && max ? { price : {$gte: min, $lte: max}} : {}
+    const ratingFilter = rating ? { rating : {$gte: rating }} : {}
+    const sortOrder = 
+        order === 'lowest' 
+        ? {price : 1} 
+        : order === 'highest' 
+        ? {price: -1} 
+        : order === 'toprated' 
+        ? {rating: -1 } 
+        : {_id: -1}
+    const products = await Product.find(
+        {   
+            ...sellerFilter,
+            ...nameFilter, 
+            ...categoryFilter, 
+            ...priceFilter,
+            ...ratingFilter
+        }).populate('seller', 'seller.name seller.logo')
+        .sort(sortOrder)
     res.send(products)
+}))
+
+productRouter.get('/categories', asyncHandler(async(req, res)=> {
+    const categories = await Product.find({}).distinct("category")
+    res.send(categories)
 }))
 
 productRouter.get('/seed', asyncHandler(async(req, res) => {
@@ -35,7 +65,7 @@ productRouter.post('/', isAuth, isSellerOrAdmin, asyncHandler(async(req, res) =>
         seller: req.user._id,
         image: '/images/001.jpg',
         price: 0,
-        category: 'sample category',
+        category: 'Test',
         brand: 'Sample barand',
         countInStock: 0,
         rating: 0,
@@ -76,5 +106,7 @@ productRouter.delete('/:id', isAuth, isAdmin, asyncHandler(async(req, res)=> {
         res.status(404).send({ message: 'Product Not Found'})
     }
 }))
+
+
 
 export default productRouter 

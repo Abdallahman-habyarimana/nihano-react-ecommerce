@@ -71,3 +71,17 @@ export const productDeleteReducer = (state={}, action) => {
             return state
     }
 }
+
+export const productCategoriesReducer = (state = { products: []}, action ) => {
+    const { type, payload } = action
+    switch(type) {
+        case actions.PRODUCT_CATEGORIES_REQUEST:
+            return { loading: true}
+        case actions.PRODUCT_CATEGORIES_SUCCESS: 
+            return { loading: false, categories: payload }
+        case actions.PRODUCT_CATEGORIES_FAIL:
+            return { loading: false, error: payload }
+        default:
+            return state;
+    }
+}

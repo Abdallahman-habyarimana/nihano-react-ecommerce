@@ -107,7 +107,7 @@ productRouter.delete('/:id', isAuth, isAdmin, asyncHandler(async(req, res)=> {
     }
 }));
 
-productRouter.post("/:id/reviews", isAuth,  asyncHandler(async(req, res) => {
+productRouter.post("/:id/reviews", isAuth, asyncHandler(async(req, res) => {
     const productId = req.params.id;
     const product = await Product.findById(productId);
     if(product){
@@ -117,7 +117,7 @@ productRouter.post("/:id/reviews", isAuth,  asyncHandler(async(req, res) => {
         const review = {
             name: req.user.name, 
             rating: Number(req.body.rating), 
-            comment: req.body.name 
+            comment: req.body.comment 
         }        
         product.reviews.push(review)
         product.numReviews = product.reviews.length;

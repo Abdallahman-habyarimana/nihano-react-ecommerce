@@ -20,7 +20,7 @@ const ProductScreen = (props) => {
     const { userInfo } = userSignin
 
     const productReview = useSelector( state => state.productReview )
-    const { error: errorReview, loading: loadingReview, success: successReview } = productReview;
+    const { loading: loadingReview, error: errorReview, success: successReview } = productReview;
 
     useEffect(()=> {
         if(successReview){
@@ -40,7 +40,7 @@ const ProductScreen = (props) => {
         e.preventDefault()
         
         if(comment && rating){
-            dispatch(createReview(productId, {rating, comment, name: userInfo.name}))
+            dispatch(createReview(productId, {rating, comment}))
         } else {
             alert('Please enter comment and rating')
         }

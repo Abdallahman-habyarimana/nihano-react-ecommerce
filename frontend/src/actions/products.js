@@ -97,3 +97,20 @@ export const deleteProduct = (id) => async(dispatch, getState) => {
         dispatch({ type: actions.PRODUCT_DELETE_FAIL, payload:err.response.data.message && err.message ? err.response.data.message : err.message })
     }
 }
+
+export const createReview = (productId, review) => async(dispatch, getState) => {
+    dispatch({ type: actions.PRODUCT_REVIEW_CREATE_REQUEST })
+    const { userSignin:{userInfo}} = getState();
+    try {
+        const { data } = await axios.post(`/api/products/${productId}/reviews`, review,  {}, 
+        {
+            headers: { Authorization: `Bearer ${userInfo.token}`}
+        })
+        dispatch({
+            type: actions.PRODUCT_REVIEW_CREATE_SUCCESS, payload: data.review
+        })
+        console.log(data)
+    } catch (err) {
+        dispatch({ type: actions.PRODUCT_REVIEW_CREATE_FAIL, payload:err.response.data.message && err.message ? err.response.data.message : err.message })
+    }
+}

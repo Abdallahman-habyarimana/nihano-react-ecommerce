@@ -40,6 +40,7 @@ img.small {
     max-width: 5rem;
     width: 100%;
 }
+
 img.medium {
     max-width: 29rem;
     width: 100%;
@@ -206,7 +207,7 @@ button.close-sidebar {
 
 /*    Card       */
 .card {
-    border: 0.1rem #c0c 0.5rem;
+    border: 0.1rem #c0c0c0 0.5rem;
     background-color: #f8f8f8;
     border-radius: 0.5rem;
     margin: 1rem;

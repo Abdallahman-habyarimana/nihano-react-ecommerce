@@ -136,7 +136,7 @@ function App() {
                   <i className="fa fa-close"></i>
                 </button>
               </li>
-              {loadingCategory ? ( <Loading /> )
+              {/* {loadingCategory ? ( <Loading /> )
               : errorCategory ? (<Message variant="danger" error={errorCategory } /> )
               : (
                 categories.map((c) => (
@@ -144,7 +144,7 @@ function App() {
                     <Link to={`/search/category/${c}`} onClick={() => setSideBarIsOpen(false)}>{c}</Link>
                   </li>
                 ))
-              )}
+              )} */}
             </ul>
         </aside>
         <main>

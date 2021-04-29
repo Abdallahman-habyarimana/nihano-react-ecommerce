@@ -11,6 +11,9 @@ const CartScreen = (props) => {
         ? Number(props.location.search.split('=')[1]) : 1;
     const cart =  useSelector(state => state.cart);
     const { cartItems, error } = cart
+
+    console.log(cartItems.length)
+
     useEffect(() => {
         if(productId) {
             dispatch(addToCart(productId, qty));
@@ -29,8 +32,7 @@ const CartScreen = (props) => {
             <div className="col-2">
                 <h1>Shopping Cart</h1>
                 {error && <Message variant="danger" error={error}/>}
-                { cartItems.length === 0 ? <Message error={`Your cart is empty.`}> 
-                </Message> : (
+                { cartItems.length === 0 ? <Message variant="danger" error="Your cart is empty" /> : (
                     <ul>
                         {cartItems.map( item  => (
                             <li key={item.product}>
@@ -52,7 +54,7 @@ const CartScreen = (props) => {
                                 
                                 <div>${item.price}</div>
                                 <div>
-                                    <i class="fa fa-trash-o icon" onClick={() => removeFromCartHandler(item.product)}></i>
+                                    <button type="button" onClick={() => removeFromCartHandler(item.product)}><i class="fa fa-trash-o icon" /></button>    
                                 </div>
                                 </div>
                             </li>

@@ -29,6 +29,7 @@ import SearchScreen from './screens/SearchScreen';
 import { listProductCategories } from './actions/products';
 import Loading from './components/Loading';
 import Message from './components/Message';
+import MapScreen from './screens/MapScreen';
 
 function App() {
   const [sideBarIsOpen, setSideBarIsOpen] = useState(false)
@@ -161,6 +162,8 @@ function App() {
           <Route path="/shipping" component={ShippingAddressScreen} />
           <Route path="/payment" component={PaymentScreen} />
           <PrivateRoute path="/profile" component={ProfileScreen} />
+          <PrivateRoute path="/map" component={MapScreen
+          } />
           <AdminRoute path="/productlist" component={ProductListScreen} exact />
           <AdminRoute path="/product/:id/edit" component={EditProductScreen} />
           <AdminRoute path="/orderlist" component={OrderListScreen} exact/>

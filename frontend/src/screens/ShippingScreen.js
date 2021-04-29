@@ -10,6 +10,12 @@ const ShippingAddressScreen = (props) => {
     const cart =  useSelector(state => state.cart);
     const { shippingAddress } = cart
 
+    const [lat, setLat] = useState(shippingAddress.lat)
+    const [lng, setLng] = useState(shippingAddress.lng)
+
+    const userAddressMap =  useSelector(state => state.userAddressMap );
+    const { address: addressMap } = userAddressMap
+
     console.log(cart)
 
     if(!userInfo) {
@@ -25,8 +31,42 @@ const ShippingAddressScreen = (props) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(saveShippingAddress({ fullName, address, city, postalCode, country }))
-        props.history.push('/payment')
+        const newLat = addressMap ? addressMap.lat : lat
+        const newLng = addressMap ? addressMap.lng : lng
+
+        if(addressMap) {
+            setLat(addressMap.lat)
+            setLng(addressMap.lng)
+        }
+
+        let moveOn = true
+        if( !newLat || !newLng )
+            moveOn = window.confirm(
+                'You did not set your location on map. continue?'
+            )
+        if(moveOn) {
+            dispatch(saveShippingAddress({ 
+                fullName, 
+                address,
+                city, 
+                postalCode, 
+                country,
+                lat: newLat,
+                lng: newLng }))
+            props.history.push('/payment')
+        }
+    }
+    const chooseOnMap = () => {
+        dispatch(saveShippingAddress({
+            fullName, 
+            address,
+            city, 
+            postalCode, 
+            country,
+            lat,
+            lng
+        }))
+        props.history.push('/map')
     }
     return ( 
         <div>
@@ -52,6 +92,10 @@ const ShippingAddressScreen = (props) => {
                 <div>
                     <label htmlFor="country"> Country </label>
                     <input type="text" id="country" placeholder="Country Name" value={country} onChange={(e) => setCountry(e.target.value)} required />
+                </div>
+                <div>
+                    <label htmlFor="chooseOnMap"> Location </label>
+                    <button type="button" onClick={chooseOnMap}>Choose On Map</button>
                 </div>
                 <div>
                     <label />

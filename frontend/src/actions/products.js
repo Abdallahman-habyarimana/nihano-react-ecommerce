@@ -2,6 +2,7 @@ import axios from 'axios'
 import * as actions from '../constants/products';
 
 export const listProducts = ({ 
+    pageNumber = '',
     seller='', 
     name='', 
     category='', 
@@ -14,7 +15,7 @@ export const listProducts = ({
     });
 
     try {
-        const { data } = await axios.get(`/api/products?seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`);
+        const { data } = await axios.get(`/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`);
         dispatch({ type: actions.PRODUCT_LIST_SUCCESS, payload: data })
     } catch (err) {
         dispatch({ type: actions.PRODUCT_LIST_FAIL, payload: err.message })

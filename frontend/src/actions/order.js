@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_DETAIL_FAIL, ORDER_DETAIL_REQUEST, ORDER_DETAIL_SUCCESS, ORDER_PAY_REQUEST, ORDER_PAY_SUCCESS, ORDER_PAY_FAIL, ORDER_MINE_LIST_REQUEST, ORDER_MINE_LIST_FAIL, ORDER_MINE_LIST_SUCCESS, ORDER_LIST_REQUEST, ORDER_LIST_SUCCESS, ORDER_LIST_FAIL, ORDER_DELETE_REQUEST, ORDER_DELETE_SUCCESS, ORDER_DELETE_FAIL, ORDER_DELIVER_REQUEST, ORDER_DELIVER_SUCCESS, ORDER_DELIVER_FAIL } from "../constants/order"
+import { ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_DETAIL_FAIL, ORDER_DETAIL_REQUEST, ORDER_DETAIL_SUCCESS, ORDER_PAY_REQUEST, ORDER_PAY_SUCCESS, ORDER_PAY_FAIL, ORDER_MINE_LIST_REQUEST, ORDER_MINE_LIST_FAIL, ORDER_MINE_LIST_SUCCESS, ORDER_LIST_REQUEST, ORDER_LIST_SUCCESS, ORDER_LIST_FAIL, ORDER_DELETE_REQUEST, ORDER_DELETE_SUCCESS, ORDER_DELETE_FAIL, ORDER_DELIVER_REQUEST, ORDER_DELIVER_SUCCESS, ORDER_DELIVER_FAIL, ORDER_SUMMARY_REQUEST, ORDER_SUMMARY_SUCCESS, ORDER_SUMMARY_FAIL } from "../constants/order"
 import { CART_EMPTY } from './../constants/cart';
 
 export const createOrder = (order) => async(dispatch, getState) => {
@@ -111,5 +111,21 @@ export const deliverOrder = (orderId) => async(dispatch, getState) => {
     } catch (err) {
         const message = err.response.data.message && err.message ? err.response.data.message : err.message
         dispatch({ type: ORDER_DELIVER_FAIL, payload: message})
+    }
+} 
+
+export const summaryOrder = () => async(dispatch, getState) => {
+    dispatch({ type: ORDER_SUMMARY_REQUEST });
+
+    const { userSignin: { userInfo }} = getState();
+    try {
+        const { data } = await axios.get(`/api/orders/summary`, {
+            headers: { Authorization: `Bearer ${userInfo.token}`}
+        })
+        console.log(data)
+        dispatch({ type: ORDER_SUMMARY_SUCCESS, payload: data })
+    } catch (err) {
+        const message = err.response.data.message && err.message ? err.response.data.message : err.message
+        dispatch({ type: ORDER_SUMMARY_FAIL, payload: message})
     }
 } 

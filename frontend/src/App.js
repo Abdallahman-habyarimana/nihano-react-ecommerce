@@ -30,6 +30,8 @@ import { listProductCategories } from './actions/products';
 import Loading from './components/Loading';
 import Message from './components/Message';
 import MapScreen from './screens/MapScreen';
+import DashboardScreen from './screens/DashboardScreen';
+import SupportScreen from './screens/SupportScreen';
 
 function App() {
   const [sideBarIsOpen, setSideBarIsOpen] = useState(false)
@@ -123,6 +125,9 @@ function App() {
                         <li>
                           <Link to="/userlist">Users</Link>
                         </li>
+                        <li>
+                          <Link to="/support">Support</Link>
+                        </li>
                       </ul>
                     </div>
                     
@@ -157,20 +162,22 @@ function App() {
           <Route path="/search/name/:name?" component={SearchScreen} exact />
           <Route path="/search/category/:category" component={SearchScreen} exact />
           <Route path="/search/category/:category/name/:name" component={SearchScreen} exact />
-          <Route path="/search/category/:category/name/:name/min/:min/max/:max" component={SearchScreen} exact />
-          <Route path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order" component={SearchScreen} exact />
+          <Route path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber" component={SearchScreen} exact />
           <Route path="/shipping" component={ShippingAddressScreen} />
           <Route path="/payment" component={PaymentScreen} />
           <PrivateRoute path="/profile" component={ProfileScreen} />
           <PrivateRoute path="/map" component={MapScreen
           } />
           <AdminRoute path="/productlist" component={ProductListScreen} exact />
+          <AdminRoute path="/dashboard" component={DashboardScreen} exact />
+          <AdminRoute path="/productlist/pageNumber/:pageNumber" component={ProductListScreen} exact />
           <AdminRoute path="/product/:id/edit" component={EditProductScreen} />
           <AdminRoute path="/orderlist" component={OrderListScreen} exact/>
           <SellerRoute path="/productlist/seller" component={ProductListScreen} />
           <SellerRoute path="/orderlist/seller" component={OrderListScreen} />
           <AdminRoute path="/userlist" component={UserListScreen} />
           <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
+          <AdminRoute path="/support" component={SupportScreen} />
           <Route path="/orderhistory" component={OrderHistoryScreen} />
           <Route path="/order/:id" component={OrderScreen} />
           <Route path="/placeorder" component={PlaceOrderScreen} />
